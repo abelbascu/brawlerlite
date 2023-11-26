@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exercise 1 - Class, Abstract Class, Interface", "..\..\LEARNING_CSHARP\Exercise 1 - Class, Abstract Class, Interface\Exercise 1 - Class, Abstract Class, Interface.csproj", "{D9FD2FCA-793E-497C-9F57-9EC938576180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "#1 - Abstract classes, Interfaces, Delegates, Func, Action", "#1\#1 - Abstract classes, Interfaces, Delegates, Func, Action\#1 - Abstract classes, Interfaces, Delegates, Func, Action.csproj", "{B7A9196D-B1EC-47F0-A878-83DDCC4ADA10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9FD2FCA-793E-497C-9F57-9EC938576180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9FD2FCA-793E-497C-9F57-9EC938576180}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9FD2FCA-793E-497C-9F57-9EC938576180}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9FD2FCA-793E-497C-9F57-9EC938576180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A9196D-B1EC-47F0-A878-83DDCC4ADA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A9196D-B1EC-47F0-A878-83DDCC4ADA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A9196D-B1EC-47F0-A878-83DDCC4ADA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A9196D-B1EC-47F0-A878-83DDCC4ADA10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

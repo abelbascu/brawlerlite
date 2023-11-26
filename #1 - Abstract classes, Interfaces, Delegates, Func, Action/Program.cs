@@ -35,7 +35,7 @@ namespace Exercise_1___Class__Abstract_Class__Interface
 
     public class HealthComponent : IDamageable
     {
-        public int Health { get; set; } = 10;
+        public int Health { get; private set; } = 10;
         public delegate void HealthChanged(Attacker attacker, int damage, Attacker target);
         public HealthChanged? healthChanged;
 
@@ -80,7 +80,7 @@ namespace Exercise_1___Class__Abstract_Class__Interface
 
     public abstract class Entity : IDamageable
     {
-        public HealthComponent HealthComponent { get; set; } = new();
+        public HealthComponent HealthComponent { get; private set; } = new(); //doesn't seem to make sense to instantiate as property
 
         public int GetHealth()
         {

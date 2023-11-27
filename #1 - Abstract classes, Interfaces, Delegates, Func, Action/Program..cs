@@ -24,40 +24,39 @@ namespace Exercise_1___Class__Abstract_Class__Interface
                 else
                     marksman.Attack(samurai);
 
-            } while (((Attacker)samurai).GetHealth() > 0 && ((Attacker)marksman).GetHealth() > 0);
+            } while (samurai.Health > 0 && marksman.Health > 0);
         }
     }
 
     public interface IDamageable
     {
-        void ReceiveDamage(Attacker attacker, int damage, Attacker target);
+        void ReceiveDamage(Attacker attacker, int damage, IDamageable target);
     }
 
     public class HealthComponent : IDamageable
     {
         public int Health { get; private set; } = 10;
-        public delegate void HealthChanged(Attacker attacker, int damage, Attacker target);
+        public delegate void HealthChanged(Attacker attacker, int damage, IDamageable target, int health);
         public HealthChanged? healthChanged;
-        //public Action<Attacker, int, Attacker> HealthChanged;
+        //public Action<Attacker, int, Attacker, int> HealthChanged;
 
-        public void ReceiveDamage(Attacker attacker, int damage, Attacker target)
+        public void ReceiveDamage(Attacker attacker, int damage, IDamageable target)
         {
             Health -= damage;
-            healthChanged?.Invoke(attacker, damage, target);
-            //HealthChanged?.Invoke(attacker, damage, target);  //to use with Action
+            healthChanged?.Invoke(attacker, damage, target, Health);
+            //HealthChanged?.Invoke(attacker, damage, target, Health);  //to use with Action
         }
     }
 
     public class HealthTracker
     {
-        public List<Attacker> attackersList = new List<Attacker>();
+
         public HealthTracker(List<Attacker> listOfAttackers)
         {
-            attackersList = listOfAttackers;
-            SubscribeToHealthChanged();
+            SubscribeToHealthChanged(listOfAttackers);
         }
 
-        public void SubscribeToHealthChanged()
+        public void SubscribeToHealthChanged(List<Attacker> attackersList)
         {
             foreach (Attacker attacker in attackersList)
             {
@@ -65,9 +64,9 @@ namespace Exercise_1___Class__Abstract_Class__Interface
             }
         }
 
-        public void OnHealthChanged(Attacker attacker, int damage, Attacker target)
+        public void OnHealthChanged(Attacker attacker, int damage, IDamageable target, int health)
         {
-            if (target.GetHealth() <= 0)
+            if (health <= 0)
             {
                 Console.WriteLine($"{attacker.GetType().Name} deals {damage} to {target.GetType().Name} and kills him. Game Over.");
             }
@@ -75,7 +74,7 @@ namespace Exercise_1___Class__Abstract_Class__Interface
                 Console.WriteLine($"{attacker.GetType().Name} misses the shot. {target.GetType().Name} receives {damage} damage.");
             else
                 Console.WriteLine($"{attacker.GetType().Name} deals {damage} to {target.GetType().Name}. " +
-                    $"{target.GetType().Name} health lowers to {target.GetHealth()}.");
+                    $"{target.GetType().Name} health lowers to {health}.");
         }
     }
 
@@ -84,12 +83,9 @@ namespace Exercise_1___Class__Abstract_Class__Interface
     {
         public HealthComponent HealthComponent { get; private set; } = new(); //doesn't seem to make sense to instantiate as property
 
-        public int GetHealth()
-        {
-            return HealthComponent.Health;
-        }
+        public int Health => HealthComponent.Health;
 
-        public void ReceiveDamage(Attacker attacker, int damage, Attacker target)
+        public void ReceiveDamage(Attacker attacker, int damage, IDamageable target)
         {
             HealthComponent.ReceiveDamage(attacker, damage, target);
         }
@@ -98,12 +94,12 @@ namespace Exercise_1___Class__Abstract_Class__Interface
     public abstract class Attacker : Entity
     {
         public int Damage { get; set; } = 1;
-        public abstract void Attack(Attacker target);
+        public abstract void Attack(IDamageable target);
     }
 
     public class Samurai : Attacker
     {
-        public override void Attack(Attacker target)
+        public override void Attack(IDamageable target)
         {
             target.ReceiveDamage(this, Damage, target);
         }
@@ -113,7 +109,7 @@ namespace Exercise_1___Class__Abstract_Class__Interface
     {
         public Bullet Bullet { get; } = new Bullet();
 
-        public override void Attack(Attacker target)
+        public override void Attack(IDamageable target)
         {
             target.ReceiveDamage(this, Bullet.Damage, target);
         }

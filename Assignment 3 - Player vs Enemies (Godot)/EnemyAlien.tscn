@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://c83xdwu2d8v0m"]
+
+[ext_resource type="Texture2D" uid="uid://btngjmm5fm46y" path="res://Character_003.png" id="1_gm7wh"]
+[ext_resource type="Script" path="res://Attacker.cs" id="1_jngin"]
+[ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://HealthBar.tscn" id="3_sc74i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pqxv3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlnoe"]
+atlas = ExtResource("1_gm7wh")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1i3jl"]
+atlas = ExtResource("1_gm7wh")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_247cj"]
+atlas = ExtResource("1_gm7wh")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3rss"]
+atlas = ExtResource("1_gm7wh")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jttlj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlnoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1i3jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_247cj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3rss")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}]
+
+[node name="EnemyAlien" type="CharacterBody2D"]
+script = ExtResource("1_jngin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pqxv3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jttlj")
+animation = &"walk_down"
+frame_progress = 0.816639
+
+[node name="HealthBar" parent="." instance=ExtResource("3_sc74i")]

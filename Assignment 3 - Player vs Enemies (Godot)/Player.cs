@@ -4,9 +4,8 @@ using System.Collections;
 using System.Threading;
 using static Godot.TextServer;
 
-public partial class Player : CharacterBody2D, IDamageable
+public partial class Player : CharacterBody2D
 {
-    public int Health { get; set; } = 10;
     public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
     public bool isAttacking;
     public Action AnimationEnded;
@@ -92,10 +91,5 @@ public partial class Player : CharacterBody2D, IDamageable
     {
         isAttacking = false;
         animatedSprite.FlipH = false;
-    }
-
-    public void ReceiveDamage()
-    {
-
     }
 }

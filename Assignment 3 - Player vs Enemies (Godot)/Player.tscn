@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://omticihu1w4y"]
+[gd_scene load_steps=31 format=3 uid="uid://omticihu1w4y"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_8xxvh"]
 [ext_resource type="Texture2D" uid="uid://dlxttqrmunrhu" path="res://Character_007.png" id="1_ld4pe"]
+[ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://HealthBar.tscn" id="3_55xan"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rwhh"]
 atlas = ExtResource("1_ld4pe")
@@ -240,14 +241,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvmwl"]
 size = Vector2(16, 20)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_8xxvh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
 animation = &"attack_right"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="HealthBar" parent="." instance=ExtResource("3_55xan")]
+
+[node name="EnemyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea"]
 position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_tvmwl")
 disabled = true

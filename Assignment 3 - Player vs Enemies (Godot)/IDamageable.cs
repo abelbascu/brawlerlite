@@ -4,5 +4,5 @@ using System;
 public interface IDamageable
 {
     int Health { get; set; }
-    void ReceiveDamage();
+    void ReceiveDamage(int damage);
 }

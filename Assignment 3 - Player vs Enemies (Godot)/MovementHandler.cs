@@ -6,13 +6,16 @@ public partial class MovementHandler : Node
 
     public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
     public CharacterBody2D characterBody = new CharacterBody2D();
+    public AttackHandler attackHandler = new AttackHandler();
     public Action AnimationEnded;
+    public Vector2 direction;
+    public bool isWalking { get; set; } = false;
 
     public override void _Ready()
     {
         AnimationEnded += OnAnimationFinished; //another way, using indirection to assign first the callback to a custom action
         animatedSprite.AnimationFinished += AnimationEnded; //then subscribing the custom action to the inbuilt signal
-        animatedSprite.AnimationFinished  += OnAnimationFinished;
+        //animatedSprite.AnimationFinished += OnAnimationFinished;
     }
 
     public override void _Process(double delta)
@@ -22,7 +25,7 @@ public partial class MovementHandler : Node
 
     public Vector2 GetDirection()
     {
-        Vector2 direction = Input.GetVector("walk_left", "walk_right", "walk_up", "walk_down");
+        direction = Input.GetVector("walk_left", "walk_right", "walk_up", "walk_down");
         return direction;
     }
 
@@ -31,14 +34,10 @@ public partial class MovementHandler : Node
         float Speed = 50;
 
         Vector2 velocity = characterBody.Velocity; //Velocity is the internal property of the RigidBody2D
-        if (velocity == Vector2.Right)
-        {
-            GD.Print("walking right");
-        }
         velocity.Y = direction.Y * Speed;
         velocity.X = direction.X * Speed;
         characterBody.Velocity = velocity;
-        if (characterBody != null)
+        if (characterBody != null && attackHandler.IsAttacking == false)
         {
             characterBody.MoveAndSlide();
             UpdateDirectionAnimations(direction);
@@ -48,7 +47,8 @@ public partial class MovementHandler : Node
     public void UpdateDirectionAnimations(Vector2 direction)
     {
         string animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
-        animatedSprite.Play(animationName);
+        if (attackHandler.IsAttacking == false)
+            animatedSprite.Play(animationName);
     }
 
     public string ReturnedDirection(Vector2 direction)
@@ -68,18 +68,6 @@ public partial class MovementHandler : Node
 
     public void OnAnimationFinished()
     {
-        //characterBody.isAttacking = false;
         animatedSprite.FlipH = false;
     }
-
-    public void SetAnimatedSprite(AnimatedSprite2D animatedSpriteExt)
-    {
-        animatedSprite = animatedSpriteExt;
-    }
-
-    public void SetCharacterBody(CharacterBody2D characterbodyExt)
-    {
-        characterBody = characterbodyExt;
-    }
-
 }

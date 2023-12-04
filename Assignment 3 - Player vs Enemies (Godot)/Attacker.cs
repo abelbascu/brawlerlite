@@ -10,7 +10,7 @@ public partial class Attacker : Node
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        enemyArea = GetNode<Area2D>("EnemyArea");
+        //enemyArea = GetNode<Area2D>("EnemyArea");
     }
 
 

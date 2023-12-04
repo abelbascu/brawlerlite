@@ -1,0 +1,85 @@
+using Godot;
+using System;
+
+public partial class MovementHandler : Node
+{
+
+    public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
+    public CharacterBody2D characterBody = new CharacterBody2D();
+    public Action AnimationEnded;
+
+    public override void _Ready()
+    {
+        AnimationEnded += OnAnimationFinished; //another way, using indirection to assign first the callback to a custom action
+        animatedSprite.AnimationFinished += AnimationEnded; //then subscribing the custom action to the inbuilt signal
+        animatedSprite.AnimationFinished  += OnAnimationFinished;
+    }
+
+    public override void _Process(double delta)
+    {
+        UpdateDirection(GetDirection());
+    }
+
+    public Vector2 GetDirection()
+    {
+        Vector2 direction = Input.GetVector("walk_left", "walk_right", "walk_up", "walk_down");
+        return direction;
+    }
+
+    public void UpdateDirection(Vector2 direction)
+    {
+        float Speed = 50;
+
+        Vector2 velocity = characterBody.Velocity; //Velocity is the internal property of the RigidBody2D
+        if (velocity == Vector2.Right)
+        {
+            GD.Print("walking right");
+        }
+        velocity.Y = direction.Y * Speed;
+        velocity.X = direction.X * Speed;
+        characterBody.Velocity = velocity;
+        if (characterBody != null)
+        {
+            characterBody.MoveAndSlide();
+            UpdateDirectionAnimations(direction);
+        }
+    }
+
+    public void UpdateDirectionAnimations(Vector2 direction)
+    {
+        string animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
+        animatedSprite.Play(animationName);
+    }
+
+    public string ReturnedDirection(Vector2 direction)
+    {
+        var normalizedDirection = direction.Normalized();
+
+        if (normalizedDirection.Y > 0)
+            return "down";
+        if (normalizedDirection.Y < 0)
+            return "up";
+        if (normalizedDirection.X > 0)
+            return "right";
+        if (normalizedDirection.X < 0)
+            return "left";
+        return "left";
+    }
+
+    public void OnAnimationFinished()
+    {
+        //characterBody.isAttacking = false;
+        animatedSprite.FlipH = false;
+    }
+
+    public void SetAnimatedSprite(AnimatedSprite2D animatedSpriteExt)
+    {
+        animatedSprite = animatedSpriteExt;
+    }
+
+    public void SetCharacterBody(CharacterBody2D characterbodyExt)
+    {
+        characterBody = characterbodyExt;
+    }
+
+}

@@ -25,7 +25,7 @@ public partial class HealthBar : ProgressBar, IDamageable
 	{
 		Health--;
 		this.Value = Health;
-		Thread.Sleep(500);
+		//Thread.Sleep(500);
 
 	}
 }

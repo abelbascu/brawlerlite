@@ -246,13 +246,11 @@ script = ExtResource("1_8xxvh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
-animation = &"attack_right"
+animation = &"attack_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_55xan")]
 
-[node name="EnemyArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_tvmwl")
 disabled = true

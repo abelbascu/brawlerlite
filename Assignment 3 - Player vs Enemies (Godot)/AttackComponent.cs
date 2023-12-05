@@ -1,15 +1,18 @@
 using Godot;
 using System;
 
-public partial class AttackHandler : Node
+public partial class AttackComponent : Node
 {
+
+    public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
+    public MovementComponent movementComponent;
+    // MAYBE I CAN GET THE NORMALIZED DIRECTION SO I CAN REMOVE THE RETURNEDDIRECTION METHOD
     public bool IsAttacking { get; set; } = false;
     public int Damage { get; set; } = 1;
     public Area2D enemyArea;
-    public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
+    
     public Action AttackAnimationEnded;
     public Vector2 direction;
-    public MovementHandler movementHandler;
 
     public override void _Ready()
     {
@@ -20,8 +23,8 @@ public partial class AttackHandler : Node
 
     public override void _Process(double delta)
     {
-        direction = movementHandler.direction;
-        ShowAttackAnimation(movementHandler.direction);
+        direction = movementComponent.direction;
+        ShowAttackAnimation(movementComponent.direction);
 
         if (enemyArea != null)
         {

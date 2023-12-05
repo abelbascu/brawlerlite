@@ -1,12 +1,13 @@
 using Godot;
 using System;
 
-public partial class MovementHandler : Node
+public partial class MovementComponent : Node
 {
-
+    //Player class derived from CharacterBase initialize these variables
     public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
     public CharacterBody2D characterBody = new CharacterBody2D();
-    public AttackHandler attackHandler = new AttackHandler();
+    public AttackComponent attackComponent = new AttackComponent();
+    
     public Action AnimationEnded;
     public Vector2 direction;
     public bool isWalking { get; set; } = false;
@@ -37,7 +38,7 @@ public partial class MovementHandler : Node
         velocity.Y = direction.Y * Speed;
         velocity.X = direction.X * Speed;
         characterBody.Velocity = velocity;
-        if (characterBody != null && attackHandler.IsAttacking == false)
+        if (characterBody != null && attackComponent.IsAttacking == false)
         {
             characterBody.MoveAndSlide();
             UpdateDirectionAnimations(direction);
@@ -47,7 +48,7 @@ public partial class MovementHandler : Node
     public void UpdateDirectionAnimations(Vector2 direction)
     {
         string animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
-        if (attackHandler.IsAttacking == false)
+        if (attackComponent.IsAttacking == false)
             animatedSprite.Play(animationName);
     }
 

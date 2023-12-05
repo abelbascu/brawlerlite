@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://32tw0wdiq8xi"]
-
-[ext_resource type="Script" path="res://AttackHandler.cs" id="1_ku7sa"]
-
-[node name="AttackHandler" type="Node2D"]
-script = ExtResource("1_ku7sa")

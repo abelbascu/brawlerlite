@@ -1,52 +1,42 @@
 using Godot;
 using System;
+using System.Threading;
 
-public partial class PlayerMovementComponent : MovementBase
+
+public partial class PlayerMovementComponent : Node
 {
     public CharacterBody2D characterBody = new CharacterBody2D();
-    //[Export] NodePath nodePath = new NodePath();
-    //[Export] PackedScene PlayerAttackComponent attackComponent;
-    //public PackedScene attackComponentScene = GD.Load<PackedScene>("res://Scenes/PlayerAttackComponent.tscn");
-    public PlayerAttackComponent attackComponent =  new PlayerAttackComponent();
-    //public PlayerAttackComponent attackComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerAttackComponent.tscn").Instantiate() as PlayerAttackComponent;
+    public PlayerAttackComponent attackComponent;
     public bool isAttacking = false;
-
-    //new PlayerAttackComponent() as Node;
+    public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
+    public Action AnimationEnded;
+    public Vector2 direction;
+    public bool isWalking { get; set; } = false;
+    public string animationName;
+    public float Speed { get; set; } = 50;
 
 
     public override void _Ready()
     {
-        //attackComponent = GetParent().GetNode("Player").GetNode<PlayerAttackComponent>("PlayerAttackComponent");
-
-        //var attackComponentNode = attackComponentScene.Instantiate() as PlayerAttackComponent;
-        //var attackComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerAttackComponent.tscn").Instantiate() as PlayerAttackComponent;
-        //AddChild(attackComponent);
-        //attackComponent = attackComponentScene;
-
-
-       // isAttacking = attackComponent.IsAttacking;
-
-        // attackComponent = attackComponentNode as PlayerAttackComponent;
-        //attackComponent = attackComponentNode as PlayerAttackComponent;
-
         AnimationEnded += OnAnimationFinished; //another way, using indirection to assign first the callback to a custom action
-        animatedSprite.AnimationFinished += AnimationEnded; //then subscribing the custom action to the inbuilt signal
-        //animatedSprite.AnimationFinished += OnAnimationFinished;
-        
+        //animatedSprite.AnimationFinished += AnimationEnded; //then subscribing the custom action to the inbuilt signal
+        animatedSprite.AnimationFinished += OnAnimationFinished;     
         characterBody = GetParent() as CharacterBody2D;
-        animatedSprite = characterBody.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        base._Ready();
+        animatedSprite = characterBody.GetNode<AnimatedSprite2D>("AnimatedSprite2D");}
+
+    public override void _Process(double delta)
+    {
+        UpdateDirection(GetDirection());
     }
 
-    //public override void _Process(double delta)
-    //{
-    //   // base._Process(delta);
-    //    //UpdateDirection(GetDirection());
-    //}
-
-    public override void UpdateDirection(Vector2 direction)
+    public virtual Vector2 GetDirection()
     {
-        base.UpdateDirection(direction);
+        direction = Input.GetVector("walk_left", "walk_right", "walk_up", "walk_down");
+        return direction;
+    }
+
+    public void UpdateDirection(Vector2 direction)
+    {
 
         //float Speed = 50;
 
@@ -55,22 +45,37 @@ public partial class PlayerMovementComponent : MovementBase
         velocity.X = direction.X * Speed;
         characterBody.Velocity = velocity;
 
-        if (characterBody != null && isAttacking == false)
+        if (characterBody != null)// && isAttacking == false)
         {
             characterBody.MoveAndSlide();
             UpdateDirectionAnimations(direction);
         }
     }
 
-    public override void UpdateDirectionAnimations(Vector2 direction)
+    public void UpdateDirectionAnimations(Vector2 direction)
     {
         animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
-        if (isAttacking == false)
+       // if (isAttacking == false)
         animatedSprite.Play(animationName);
     }
 
     public void OnAnimationFinished()
     {
         animatedSprite.FlipH = false;
+    }
+
+    public string ReturnedDirection(Vector2 direction)
+    {
+        var normalizedDirection = direction.Normalized();
+
+        if (normalizedDirection.Y > 0)
+            return "down";
+        if (normalizedDirection.Y < 0)
+            return "up";
+        if (normalizedDirection.X > 0)
+            return "right";
+        if (normalizedDirection.X < 0)
+            return "left";
+        return "left";
     }
 }

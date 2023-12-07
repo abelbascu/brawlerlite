@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl5r88qgu3xq2"]
-
-[ext_resource type="Script" path="res://Scripts/EnemyAlienMovementComponent.cs" id="1_1h052"]
-
-[node name="EnemyAlienMovementComponent" type="Node2D"]
-script = ExtResource("1_1h052")

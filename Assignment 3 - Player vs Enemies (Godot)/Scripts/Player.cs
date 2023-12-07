@@ -6,22 +6,24 @@ using static Godot.TextServer;
 
 public partial class Player : CharacterBody2D
 {
-    public PlayerMovementComponent movementComponent;
-    public PlayerAttackComponent attackComponent;
+    //public PlayerMovementComponent movementComponent;
+    //public PlayerAttackComponent attackComponent;
 
-    public override void _Ready()
-    {
-        movementComponent = GetNode<PlayerMovementComponent>("PlayerMovementComponent");
-        attackComponent = GetNode<PlayerAttackComponent>("PlayerAttackComponent");
+    //public override void _Ready()
+    //{
 
-        movementComponent.attackComponent = attackComponent;
-        attackComponent.movementComponent = movementComponent;
-        movementComponent.isAttacking = attackComponent.IsAttacking;
+    //    movementComponent = GetNode<PlayerMovementComponent>("PlayerMovementComponent");
+    //    movementComponent.characterBody = this;
+    //    movementComponent.animatedSprite = this.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+    //    movementComponent.animatedSprite.AnimationFinished += movementComponent.AnimationEnded;
+    //   attackComponent = GetNode<PlayerAttackComponent>("PlayerAttackComponent");
 
-        attackComponent.direction = movementComponent.direction;
+    //    movementComponent.attackComponent = attackComponent;
+    //    attackComponent.movementComponent = movementComponent;
+    //    movementComponent.isAttacking = attackComponent.IsAttacking;
 
-
-    }
+    //    attackComponent.direction = movementComponent.direction;
+    //}
 
    
 

@@ -246,6 +246,10 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_ohilw")
 
+[node name="PlayerMovementComponent" parent="." instance=ExtResource("4_qrfj1")]
+
+[node name="PlayerAttackComponent" parent="." instance=ExtResource("5_jrd4j")]
+
 [node name="HealthBar" parent="." instance=ExtResource("3_s8cx7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -255,7 +259,3 @@ shape = SubResource("RectangleShape2D_tvmwl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
 animation = &"attack_down"
-
-[node name="PlayerAttackComponent" parent="." instance=ExtResource("5_jrd4j")]
-
-[node name="PlayerMovementComponent" parent="." instance=ExtResource("4_qrfj1")]

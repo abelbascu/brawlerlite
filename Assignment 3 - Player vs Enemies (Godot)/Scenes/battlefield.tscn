@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ca85anw6p2mww"]
 
-[ext_resource type="PackedScene" uid="uid://d02nit2vedhxc" path="res://ground.tscn" id="1_pmr63"]
-[ext_resource type="Script" path="res://battlefield.cs" id="1_yr5ld"]
-[ext_resource type="PackedScene" uid="uid://omticihu1w4y" path="res://Player.tscn" id="2_ogh6l"]
-[ext_resource type="PackedScene" uid="uid://c83xdwu2d8v0m" path="res://EnemyAlien.tscn" id="3_02vob"]
+[ext_resource type="PackedScene" uid="uid://d02nit2vedhxc" path="res://Scenes/ground.tscn" id="1_pmr63"]
+[ext_resource type="Script" path="res://Scripts/battlefield.cs" id="1_yr5ld"]
+[ext_resource type="PackedScene" uid="uid://omticihu1w4y" path="res://Scenes/Player.tscn" id="2_ogh6l"]
+[ext_resource type="PackedScene" uid="uid://c83xdwu2d8v0m" path="res://Scenes/EnemyAlien.tscn" id="3_02vob"]
 
 [node name="Battlefield" type="Node2D"]
 script = ExtResource("1_yr5ld")

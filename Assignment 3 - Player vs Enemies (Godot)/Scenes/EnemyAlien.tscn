@@ -1,25 +1,27 @@
-[gd_scene load_steps=10 format=3 uid="uid://c83xdwu2d8v0m"]
+[gd_scene load_steps=12 format=3 uid="uid://c83xdwu2d8v0m"]
 
-[ext_resource type="Script" path="res://EnemyAlien.cs" id="1_gj0cg"]
-[ext_resource type="Texture2D" uid="uid://btngjmm5fm46y" path="res://Character_003.png" id="1_gm7wh"]
-[ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://HealthBar.tscn" id="3_sc74i"]
+[ext_resource type="Script" path="res://Scripts/EnemyAlien.cs" id="1_730b2"]
+[ext_resource type="PackedScene" uid="uid://cl5r88qgu3xq2" path="res://Scenes/EnemyAlienMovementComponent.tscn" id="2_5d6n2"]
+[ext_resource type="Texture2D" uid="uid://btngjmm5fm46y" path="res://Art/Character_003.png" id="2_35y5o"]
+[ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://Scenes/HealthBar.tscn" id="3_pfhjj"]
+[ext_resource type="PackedScene" uid="uid://32tw0wdiq8xi" path="res://Scenes/EnemyAlienAttackComponent.tscn" id="5_25xda"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pqxv3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tlnoe"]
-atlas = ExtResource("1_gm7wh")
+atlas = ExtResource("2_35y5o")
 region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1i3jl"]
-atlas = ExtResource("1_gm7wh")
+atlas = ExtResource("2_35y5o")
 region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_247cj"]
-atlas = ExtResource("1_gm7wh")
+atlas = ExtResource("2_35y5o")
 region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3rss"]
-atlas = ExtResource("1_gm7wh")
+atlas = ExtResource("2_35y5o")
 region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jttlj"]
@@ -43,7 +45,13 @@ animations = [{
 }]
 
 [node name="EnemyAlien" type="CharacterBody2D"]
-script = ExtResource("1_gj0cg")
+script = ExtResource("1_730b2")
+
+[node name="HealthBar" parent="." instance=ExtResource("3_pfhjj")]
+
+[node name="EnemyAlienAttackComponent" parent="." instance=ExtResource("5_25xda")]
+
+[node name="EnemyAlienMovementComponent" parent="." instance=ExtResource("2_5d6n2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pqxv3")
@@ -52,5 +60,3 @@ shape = SubResource("RectangleShape2D_pqxv3")
 sprite_frames = SubResource("SpriteFrames_jttlj")
 animation = &"walk_down"
 frame_progress = 0.816639
-
-[node name="HealthBar" parent="." instance=ExtResource("3_sc74i")]

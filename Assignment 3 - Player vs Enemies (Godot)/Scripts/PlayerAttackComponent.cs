@@ -1,21 +1,29 @@
 using Godot;
 using System;
 
-public partial class AttackComponent : Node
+public partial class PlayerAttackComponent : Node
 {
-
     public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
-    public MovementComponent movementComponent;
+    //public MovementBase movementComponent;
+    // PONER UN EXPORT DE PLAYERMOVEMENTCOMPONENT PERO EN PLAYERATTACKCOMPONENT NO AQUI
+
     // MAYBE I CAN GET THE NORMALIZED DIRECTION SO I CAN REMOVE THE RETURNEDDIRECTION METHOD
     public bool IsAttacking { get; set; } = false;
     public int Damage { get; set; } = 1;
     public Area2D enemyArea;
-    
+
     public Action AttackAnimationEnded;
     public Vector2 direction;
+   // public PlayerMovementComponent movementComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerMovementComponent.tscn").Instantiate() as PlayerMovementComponent;
+    public PlayerMovementComponent movementComponent = new PlayerMovementComponent();
 
     public override void _Ready()
     {
+        //var movementComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerMovementComponent.tscn").Instantiate() as PlayerMovementComponent;
+        //movementComponent = movementComponentScene;
+        //AddChild(movementComponent);
+        //movementComponent = GetParent().GetNode("Player").GetNode<PlayerMovementComponent>("PlayerMovementComponent");
+        //direction = movementComponent.direction;
         IsAttacking = false;
         AttackAnimationEnded += OnAttackAnimationFinished; //then subscribing the custom action to the inbuilt signal     
         //enemyArea = GetNode<Area2D>("EnemyArea");
@@ -23,8 +31,8 @@ public partial class AttackComponent : Node
 
     public override void _Process(double delta)
     {
-        direction = movementComponent.direction;
-        ShowAttackAnimation(movementComponent.direction);
+        
+        ShowAttackAnimation(direction);
 
         if (enemyArea != null)
         {

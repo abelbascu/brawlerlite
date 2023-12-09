@@ -6,26 +6,26 @@ using static Godot.TextServer;
 
 public partial class Player : CharacterBody2D
 {
-    //public PlayerMovementComponent movementComponent;
-    //public PlayerAttackComponent attackComponent;
+    public PlayerMovementComponent movementComponent;
+    public PlayerAttackComponent attackComponent;
 
-    //public override void _Ready()
-    //{
+    public override void _Ready()
+    {
 
-    //    movementComponent = GetNode<PlayerMovementComponent>("PlayerMovementComponent");
-    //    movementComponent.characterBody = this;
-    //    movementComponent.animatedSprite = this.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-    //    movementComponent.animatedSprite.AnimationFinished += movementComponent.AnimationEnded;
-    //   attackComponent = GetNode<PlayerAttackComponent>("PlayerAttackComponent");
+        movementComponent = GetNode<PlayerMovementComponent>("PlayerMovementComponent");
+        movementComponent.characterBody = this;
+        movementComponent.animatedSprite = this.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        movementComponent.animatedSprite.AnimationFinished += movementComponent.OnAnimationFinished;
 
-    //    movementComponent.attackComponent = attackComponent;
-    //    attackComponent.movementComponent = movementComponent;
-    //    movementComponent.isAttacking = attackComponent.IsAttacking;
-
-    //    attackComponent.direction = movementComponent.direction;
-    //}
-
-   
+        attackComponent = GetNode<PlayerAttackComponent>("PlayerAttackComponent");
+        attackComponent.characterBody = this;
+        attackComponent.animatedSprite = this.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        attackComponent.animatedSprite.AnimationFinished += attackComponent.OnAttackAnimationFinished;
 
 
+        movementComponent.attackComponent = attackComponent;
+        attackComponent.movementComponent = movementComponent;
+        attackComponent.IsAttackingAction += movementComponent.OnIsAttacking;
+
+    }
 }

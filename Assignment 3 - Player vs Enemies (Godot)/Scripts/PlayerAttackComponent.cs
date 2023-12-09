@@ -4,35 +4,30 @@ using System.Threading;
 
 public partial class PlayerAttackComponent : Node
 {
-    public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
-    //public MovementBase movementComponent;
-    // PONER UN EXPORT DE PLAYERMOVEMENTCOMPONENT PERO EN PLAYERATTACKCOMPONENT NO AQUI
-    // MAYBE I CAN GET THE NORMALIZED DIRECTION SO I CAN REMOVE THE RETURNEDDIRECTION METHOD
+    public AnimatedSprite2D animatedSprite;
+    public CharacterBody2D characterBody;
     public bool IsAttacking { get; set; } = false;
     public int Damage { get; set; } = 1;
     public Area2D enemyArea;
     public Action AttackAnimationEnded;
     public Vector2 direction;
-   // public PlayerMovementComponent movementComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerMovementComponent.tscn").Instantiate() as PlayerMovementComponent;
-    public PlayerMovementComponent movementComponent = new PlayerMovementComponent();
+    public string animationName;
+    public PlayerMovementComponent movementComponent;
 
     public override void _Ready()
     {
-        Thread.Sleep(1000);
-        //var movementComponent = ResourceLoader.Load<PackedScene>("res://Scenes/PlayerMovementComponent.tscn").Instantiate() as PlayerMovementComponent;
-        //movementComponent = movementComponentScene;
-        //AddChild(movementComponent);
-        //movementComponent = GetParent().GetNode("Player").GetNode<PlayerMovementComponent>("PlayerMovementComponent");
-        //direction = movementComponent.direction;
         IsAttacking = false;
-        AttackAnimationEnded += OnAttackAnimationFinished; //then subscribing the custom action to the inbuilt signal     
-        //enemyArea = GetNode<Area2D>("EnemyArea");
     }
 
     public override void _Process(double delta)
     {
-        
-        ShowAttackAnimation(direction);
+        CheckIfAttackActionPressed();
+
+        if (IsAttacking)
+        {
+            direction = movementComponent.direction;
+            ShowAttackAnimation(direction);
+        }
 
         if (enemyArea != null)
         {
@@ -45,13 +40,22 @@ public partial class PlayerAttackComponent : Node
 
     }
 
-    public void ShowAttackAnimation(Vector2 direction)
+    public void CheckIfAttackActionPressed()
     {
-        string animationName;
         if (Input.IsActionPressed("attack"))
         {
             IsAttacking = true;
+            //IsAttackingAction.Invoke();
+        }
+
+        //else IsAttacking = false;    this sentence was preventing the attack animation to be completed, when you released spacebar this was set to false before the animation finished so the movement code was enabled. 
+    }
+
+    public void ShowAttackAnimation(Vector2 direction)
+    {
+        {
             animationName = "attack_" + ReturnedDirection(direction);
+
             if (direction == Vector2.Right)
             {
                 animatedSprite.FlipH = true;
@@ -61,7 +65,6 @@ public partial class PlayerAttackComponent : Node
             {
                 animatedSprite.FlipH = true; //we reuse attack_left animation
             }
-            animatedSprite.AnimationFinished += AttackAnimationEnded; //if i subscribe on ready, animatedSprite doesn't exist yet.
             animatedSprite.Play(animationName);
         }
     }
@@ -84,6 +87,8 @@ public partial class PlayerAttackComponent : Node
     public void OnAttackAnimationFinished()
     {
         IsAttacking = false;
-        animatedSprite.FlipH = false;
+        if (animationName == "attack_right")
+              animatedSprite.FlipH = false;
+
     }
 }

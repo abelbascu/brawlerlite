@@ -170,7 +170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oadxu")
 }],
-"loop": true,
+"loop": false,
 "name": &"new_animation",
 "speed": 5.0
 }, {
@@ -187,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m7qw5")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk_down",
 "speed": 5.0
 }, {
@@ -204,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cw8ob")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk_left",
 "speed": 5.0
 }, {
@@ -221,7 +221,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pwm6y")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk_right",
 "speed": 5.0
 }, {
@@ -238,7 +238,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1eh6c")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk_up",
 "speed": 5.0
 }]
@@ -258,4 +258,4 @@ shape = SubResource("RectangleShape2D_tvmwl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
-animation = &"attack_down"
+animation = &"idle"

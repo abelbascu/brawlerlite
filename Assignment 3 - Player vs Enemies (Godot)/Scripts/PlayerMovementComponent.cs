@@ -18,15 +18,14 @@ public partial class PlayerMovementComponent : Node
 
     public override void _Ready()
     {
-        AnimationEnded += OnAnimationFinished; //another way, using indirection to assign first the callback to a custom action
-        //animatedSprite.AnimationFinished += AnimationEnded; //then subscribing the custom action to the inbuilt signal
-        animatedSprite.AnimationFinished += OnAnimationFinished;     
-        characterBody = GetParent() as CharacterBody2D;
-        animatedSprite = characterBody.GetNode<AnimatedSprite2D>("AnimatedSprite2D");}
+
+    }
 
     public override void _Process(double delta)
     {
-        UpdateDirection(GetDirection());
+        //isAttacking = attackComponent.IsAttacking;
+        if (!attackComponent.IsAttacking)
+            UpdateDirection(GetDirection());
     }
 
     public virtual Vector2 GetDirection()
@@ -37,15 +36,12 @@ public partial class PlayerMovementComponent : Node
 
     public void UpdateDirection(Vector2 direction)
     {
-
-        //float Speed = 50;
-
         Vector2 velocity = characterBody.Velocity; //Velocity is the internal property of the RigidBody2D
         velocity.Y = direction.Y * Speed;
         velocity.X = direction.X * Speed;
         characterBody.Velocity = velocity;
 
-        if (characterBody != null)// && isAttacking == false)
+        if (characterBody != null && isAttacking == false)
         {
             characterBody.MoveAndSlide();
             UpdateDirectionAnimations(direction);
@@ -55,13 +51,8 @@ public partial class PlayerMovementComponent : Node
     public void UpdateDirectionAnimations(Vector2 direction)
     {
         animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
-       // if (isAttacking == false)
-        animatedSprite.Play(animationName);
-    }
-
-    public void OnAnimationFinished()
-    {
-        animatedSprite.FlipH = false;
+        if (attackComponent.IsAttacking == false)
+            animatedSprite.Play(animationName);
     }
 
     public string ReturnedDirection(Vector2 direction)
@@ -78,4 +69,11 @@ public partial class PlayerMovementComponent : Node
             return "left";
         return "left";
     }
+
+    public void OnAnimationFinished()
+    {
+        if (direction == Vector2.Right)
+            animatedSprite.FlipH = false;
+    }
+
 }

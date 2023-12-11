@@ -9,15 +9,17 @@ public partial class PlayerMovementComponent : Node
     public PlayerAttackComponent attackComponent;
     public bool isAttacking = false;
     public AnimatedSprite2D animatedSprite = new AnimatedSprite2D();
-    public Action AnimationEnded;
+    public Action MovementAnimationEnded;
     public Vector2 direction;
+    public Vector2 cachedDirectionBeforeIdle;
     public bool isWalking { get; set; } = false;
     public string animationName;
     public float Speed { get; set; } = 50;
 
     public void UpdateDirection(Vector2 direction)
     {
-        Vector2 velocity = characterBody.Velocity; //Velocity is the internal property of the RigidBody2D
+        //Velocity is the internal property of the RigidBody2D
+        Vector2 velocity = characterBody.Velocity;
         velocity.Y = direction.Y * Speed;
         velocity.X = direction.X * Speed;
         characterBody.Velocity = velocity;
@@ -32,8 +34,17 @@ public partial class PlayerMovementComponent : Node
     public void UpdateDirectionAnimations(Vector2 direction)
     {
         animationName = (direction != Vector2.Zero) ? "walk_" + ReturnedDirection(direction) : "idle";
-        if (attackComponent.IsAttacking == false)
-            animatedSprite.Play(animationName);
+
+        //safety check if we come from attack Right, that needs to flip sprite as it's reusing attack_left anim
+        if (direction == Vector2.Left && animatedSprite.FlipH == true)
+            animatedSprite.FlipH = false;
+        if (direction == Vector2.Right && animatedSprite.FlipH == true)
+            animatedSprite.FlipH = false;
+        //we cache the direction so we know where player is facing before idle, so we can attack in that direction being idle
+        if (animationName != "idle")     
+            cachedDirectionBeforeIdle = direction;
+
+        animatedSprite.Play(animationName);
     }
 
     public string ReturnedDirection(Vector2 direction)
@@ -51,10 +62,9 @@ public partial class PlayerMovementComponent : Node
         return "left";
     }
 
-    public void OnAnimationFinished()
+    public void OnMovementAnimationFinished()
     {
-        if (direction == Vector2.Right)
-            animatedSprite.FlipH = false;
+        MovementAnimationEnded.Invoke();
     }
 
 }

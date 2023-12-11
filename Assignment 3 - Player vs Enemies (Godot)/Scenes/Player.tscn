@@ -113,48 +113,60 @@ region = Rect2(72, 72, 24, 24)
 [sub_resource type="SpriteFrames" id="SpriteFrames_nb2kf"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_0rwhh")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_vav2x")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_0rwhh")
 }],
 "loop": false,
 "name": &"attack_down",
-"speed": 2.0
+"speed": 3.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_3ofa2")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_s8ur5")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_3ofa2")
 }],
 "loop": false,
 "name": &"attack_left",
-"speed": 2.0
+"speed": 3.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_3ofa2")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_s8ur5")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_3ofa2")
 }],
 "loop": false,
 "name": &"attack_right",
-"speed": 2.0
+"speed": 3.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_1cy24")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_u0vom")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_1cy24")
 }],
 "loop": false,
 "name": &"attack_up",
-"speed": 2.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -259,7 +271,7 @@ shape = SubResource("RectangleShape2D_tvmwl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
-animation = &"attack_right"
+animation = &"attack_left"
 
 [node name="InputManagerComponent" type="Node2D" parent="."]
 script = ExtResource("6_637dq")

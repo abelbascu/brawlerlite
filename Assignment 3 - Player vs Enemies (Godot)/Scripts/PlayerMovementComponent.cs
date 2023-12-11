@@ -15,25 +15,6 @@ public partial class PlayerMovementComponent : Node
     public string animationName;
     public float Speed { get; set; } = 50;
 
-
-    public override void _Ready()
-    {
-
-    }
-
-    public override void _Process(double delta)
-    {
-        //isAttacking = attackComponent.IsAttacking;
-        if (!attackComponent.IsAttacking)
-            UpdateDirection(GetDirection());
-    }
-
-    public virtual Vector2 GetDirection()
-    {
-        direction = Input.GetVector("walk_left", "walk_right", "walk_up", "walk_down");
-        return direction;
-    }
-
     public void UpdateDirection(Vector2 direction)
     {
         Vector2 velocity = characterBody.Velocity; //Velocity is the internal property of the RigidBody2D

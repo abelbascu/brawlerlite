@@ -1,10 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://bpwbj4o01u6ns"]
+[gd_scene load_steps=34 format=3 uid="uid://bpwbj4o01u6ns"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_ohilw"]
 [ext_resource type="Texture2D" uid="uid://dlxttqrmunrhu" path="res://Art/Character_007.png" id="2_kg7kp"]
 [ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://Scenes/HealthBar.tscn" id="3_s8cx7"]
 [ext_resource type="PackedScene" uid="uid://cvhbu0g0dcbln" path="res://Scenes/PlayerMovementComponent.tscn" id="4_qrfj1"]
 [ext_resource type="PackedScene" uid="uid://bvrycjc8th312" path="res://Scenes/PlayerAttackComponent.tscn" id="5_jrd4j"]
+[ext_resource type="Script" path="res://Scenes/InputManagerComponent.cs" id="6_637dq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvmwl"]
 size = Vector2(16, 20)
@@ -258,4 +259,7 @@ shape = SubResource("RectangleShape2D_tvmwl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nb2kf")
-animation = &"idle"
+animation = &"attack_right"
+
+[node name="InputManagerComponent" type="Node2D" parent="."]
+script = ExtResource("6_637dq")

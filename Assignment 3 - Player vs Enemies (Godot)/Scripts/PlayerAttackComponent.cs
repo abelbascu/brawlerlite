@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 public partial class PlayerAttackComponent : Node
@@ -7,17 +8,29 @@ public partial class PlayerAttackComponent : Node
     public AnimatedSprite2D animatedSprite;
     public CharacterBody2D characterBody;
     public int Damage { get; set; } = 1;
-    public Area2D enemyArea;
     public Action AttackAnimationEnded;
-    //public Vector2 direction;
     public string animationName;
     public PlayerMovementComponent movementComponent;
     public Vector2 cachedDirection;
+    public PlayerArea playerArea;
 
 
     public void Attack(Vector2 direction)
     {
         ShowAttackAnimation(direction);
+        if (playerArea.IsOverlappingEnemy)
+        {
+            OnOverlappingEnemy(playerArea.EnemiesOverlapping);
+        }
+    }
+
+    public void OnOverlappingEnemy(List<Area2D> enemiesOverlapping)
+    {
+        foreach (var enemyArea in enemiesOverlapping)
+        {
+            HealthBar enemyHealthBar = enemyArea.GetParent().GetNode<HealthBar>("HealthBar");
+            enemyHealthBar.Health -= 2;
+        }
     }
 
     public void ShowAttackAnimation(Vector2 direction)
@@ -29,12 +42,12 @@ public partial class PlayerAttackComponent : Node
         if (animationName == "attack_idle") // if player is idle, we check his previous direction to know where he is facing
             animationName = "attack_" + ReturnedDirection(cachedDirection);
 
-        if ((direction == Vector2.Left) || (cachedDirection == Vector2.Left))   
+        if ((direction == Vector2.Left) || (cachedDirection == Vector2.Left))
             animatedSprite.FlipH = false; //we reuse attack_left animation
-        
-        if (direction == Vector2.Right || (cachedDirection == Vector2.Right))    
+
+        if (direction == Vector2.Right || (cachedDirection == Vector2.Right))
             animatedSprite.FlipH = true; //we reuse attack_left animation
-        
+
         animatedSprite.Play(animationName);
 
     }

@@ -1,0 +1,173 @@
+[gd_scene load_steps=23 format=3 uid="uid://dgmj0dnocjf4d"]
+
+[ext_resource type="Script" path="res://Scenes/AlienEnemy.cs" id="1_mxyw6"]
+[ext_resource type="Texture2D" uid="uid://btngjmm5fm46y" path="res://Art/Characters/Character_003.png" id="2_cis4u"]
+[ext_resource type="PackedScene" uid="uid://wvyx54n0wusj" path="res://Scenes/HealthBar.tscn" id="4_slk8s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6nnn0"]
+size = Vector2(14, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k3rp"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8aeq"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejvxq"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtypn"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ecv4s"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sxyp"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lew0"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37oyb"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whs3i"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl87h"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxuqk"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfmov"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(72, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g45gy"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(0, 72, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rx82"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(24, 72, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbbbt"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(48, 72, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ec3jb"]
+atlas = ExtResource("2_cis4u")
+region = Rect2(72, 72, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_naxsd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k3rp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8aeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejvxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtypn")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ecv4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sxyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lew0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37oyb")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whs3i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl87h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxuqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfmov")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g45gy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rx82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbbbt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ec3jb")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wc2et"]
+size = Vector2(21, 25)
+
+[node name="AlienEnemy" type="CharacterBody2D" groups=["Enemies"]]
+collision_mask = 7
+script = ExtResource("1_mxyw6")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_6nnn0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_naxsd")
+animation = &"walk_up"
+
+[node name="HealthBar" parent="." instance=ExtResource("4_slk8s")]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_wc2et")
